@@ -1,16 +1,17 @@
-{
-    "hamburgueres": [
-        {
-            "id": 1,
-            "nome": "DevBurger Clássico",
-            "categoria": "Gourmet",
-            "ingredientes": ["Pão brioche", "Carne 150g", "Queijo cheddar", "Alface americana", "Tomate fresco", "Molho especial"]
-        },
-        {
-            "id": 2,
-            "nome": "Burger de Bacon",
-            "categoria": "Apimentado",
-            "ingredientes": ["Pão australiano", "Carne 180g", "Queijo prato", "Bacon crocante", "Cebola caramelizada", "Molho barbecue"]
-        }
-    ]
-}
+[
+    {
+        "id": 1,
+        "nome": "Cheeseburger",
+        "ingredientes": ["Pão", "Carne", "Queijo", "Alface", "Tomate"]
+    },
+    {
+        "id": 2,
+        "nome": "Veggie Burger",
+        "ingredientes": ["Pão", "Hambúrguer Vegetariano", "Alface", "Tomate", "Molho Especial"]
+    },
+    {
+        "id": 3,
+        "nome": "Chicken Burger",
+        "ingredientes": ["Pão", "Frango", "Queijo", "Alface", "Maionese"]
+    }
+]
