@@ -20,7 +20,7 @@ app.get('/contato', (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'contatos.html'));
 });
 
-// CONTATO (POST)
+// CONTATO (POST) - Implementação do padrão PRG
 app.post('/contato', (req, res) => {
     const { nome, email, assunto, mensagem } = req.body;
 
@@ -28,32 +28,30 @@ app.post('/contato', (req, res) => {
         return res.status(400).send('Todos os campos são obrigatórios!');
     }
 
-    const respostaHTML = `
+    // Redireciona para a rota de sucesso
+    res.redirect(`/contato/sucesso?nome=${encodeURIComponent(nome)}`);
+});
+
+app.get('/contato/sucesso', (req, res) => {
+    const { nome } = req.query;
+
+    const htmlSucesso = `
         <!DOCTYPE html>
         <html lang="pt-BR">
         <head>
             <meta charset="UTF-8">
-            <title>Contato Recebido</title>
+            <title>Contato Enviado</title>
             <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
         </head>
         <body>
-            <div class="container mt-5">
-                <div class="card">
-                    <div class="card-body">
-                        <h1 class="card-title text-success">Obrigado pelo contato!</h1>
-                        <p><strong>Nome:</strong> ${nome}</p>
-                        <p><strong>Email:</strong> ${email}</p>
-                        <p><strong>Assunto:</strong> ${assunto}</p>
-                        <p><strong>Mensagem:</strong> ${mensagem}</p>
-                        <a href="/" class="btn btn-primary">Voltar à Página Inicial</a>
-                    </div>
-                </div>
+            <div class="container mt-5 text-center">
+                <h1 class="text-success">Obrigado pelo contato, ${nome}!</h1>
+                <a href="/" class="btn btn-primary mt-3">Voltar à Página Inicial</a>
             </div>
         </body>
         </html>
     `;
-
-    res.send(respostaHTML);
+    res.send(htmlSucesso);
 });
 
 // SUGESTAO (GET - Formulário)
@@ -124,12 +122,29 @@ app.get('/sugestao', (req, res) => {
 
 // API LANCHES
 app.get('/api/lanches', (req, res) => {
-    res.json(lanches.hamburgueres);
+    res.json(lanches);
 });
 
 // 404 - Página Não Encontrada
 app.use((req, res) => {
-    res.status(404).sendFile(path.join(__dirname, 'public', '404.html'));
+    const html404 = `
+        <!DOCTYPE html>
+        <html lang="pt-BR">
+        <head>
+            <meta charset="UTF-8">
+            <title>Página Não Encontrada</title>
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+        </head>
+        <body>
+            <div class="container mt-5 text-center">
+                <h1 class="text-danger">404 - Página Não Encontrada</h1>
+                <p>A página que você está procurando não existe.</p>
+                <a href="/" class="btn btn-primary">Voltar à Página Inicial</a>
+            </div>
+        </body>
+        </html>
+    `;
+    res.status(404).send(html404);
 });
 
 // INICIAR SERVIDOR
