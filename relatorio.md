@@ -1,56 +1,70 @@
 <sup>Esse é um feedback gerado por IA, ele pode conter erros.</sup>
 
-Você tem 9 créditos restantes para usar o sistema de feedback AI.
+Você tem 8 créditos restantes para usar o sistema de feedback AI.
 
 # Feedback para fillmello:
 
-Nota final: **17.1/100**
+Nota final: **41.6/100**
 
-Olá, fillmello! 🚀
+# Feedback do Desafio de Servidor Express.js 🚀
 
-Primeiro, quero parabenizá-lo(a) por todo o esforço que você colocou neste projeto! A jornada de aprendizagem pode ser desafiadora, e é incrível ver você se dedicando a entender o Express.js. Vamos dar uma olhada no seu código e identificar algumas áreas que precisamos melhorar juntos. 💪
+Olá, fillmello! 👋 Primeiro, quero parabenizá-lo pelo seu esforço e dedicação! A nota final de **41.6/100** mostra que você já está no caminho certo, mas sempre há espaço para melhorias, e estou aqui para te ajudar a brilhar ainda mais! 🌟
 
-### Celebrando as Conquistas 🎉
-Infelizmente, não temos conquistas bônus para destacar dessa vez. Porém, isso não desmerece o seu esforço! Cada tentativa é uma oportunidade de aprendizado, e você está no caminho certo. Vamos focar nas melhorias a seguir!
+## Conquistas Bônus 🎉
+Antes de mergulharmos nos pontos de melhoria, vamos celebrar algumas vitórias! Você utilizou corretamente as tags `<label>` e o atributo `id` nos inputs do formulário da rota `/contato (GET)`. Isso é excelente, pois melhora a acessibilidade e a usabilidade do seu formulário! Continue assim!
 
-### Análise dos Problemas
-Agora, vamos explorar os requisitos que precisam de atenção e descobrir as causas raízes dos problemas. Isso nos ajudará a entender melhor o que precisa ser ajustado.
+## Análise dos Requisitos que Precisam de Atenção 🔍
+Vamos explorar os pontos onde seu código não atendeu aos requisitos. Vou explicar cada um deles e suas causas para que você possa entender e corrigir.
 
-1. **Rota `/` não encontrada**: Um dos requisitos é que a raiz do seu aplicativo (`/`) deva conter um formulário. No seu código, não há definição para essa rota! Por isso, não podemos acessar um formulário na página inicial. Vamos criar essa rota! Você pode fazer isso adicionando algo como:
-   ```javascript
-   app.get('/', (req, res) => {
-       res.send('<h1>Bem-vindo à nossa página!</h1><form action="/sugestao" method="POST">...</form>');
-   });
-   ```
+1. **Rota `/` - deve conter pelo menos um formulário:**
+   - A rota raiz (`app.get('/')`) atualmente serve apenas um arquivo HTML estático. Para atender a esse requisito, você precisa inserir um formulário na página inicial. Vamos pensar juntos em que informações você gostaria que os usuários enviassem diretamente na página inicial?
 
-2. **Botão do tipo submit**: Você mencionou que o formulário deve conter um botão do tipo submit. A rota `/` não existe, então, ao criar uma, não se esqueça de incluir um botão de envio!
+2. **Rota `/` - form deve conter botão do tipo submit:**
+   - Novamente, como não temos nenhum formulário na rota `/`, isso gera a falha. Assim, não há como ter um botão de submit. Assim como mencionado acima, vamos criar um formulário simples para que os usuários possam enviar suas informações!
 
-3. **Campos de input com name attributes corretos**: Você precisa garantir que os campos do formulário na sua página raiz contenham os names corretos. Verifique se você tem um campo para "nome" e outro para "ingredientes".
+3. **Rota `/` - deve conter dois campos de input do tipo texto com atributos "name" sendo "nome" no primeiro e "ingredientes" no segundo:**
+   - Isso está diretamente relacionado ao primeiro e segundo pontos. Uma vez que você adicionar um formulário à rota `/`, certifique-se de incluir os campos necessários com os `name` corretos.
 
-4. **Rota `/sugestao` deve retornar status code 200 com content-type HTML**: A rota `/sugestao` está definida, mas precisamos garantir que ela retorne o status 200 e o content-type correto. Certifique-se de que ao responder ao formulário, você não tenha nenhum erro que impeça isso.
+4. **Rota `/sugestao` - deve exibir o nome enviado via query string na página HTML:**
+   - Na rota `/sugestao`, você não está manipulando a query string. Você pode usar `req.query` para capturar e exibir o nome na página HTML que você está retornando.
 
-5. **Exibir dados enviados via query string na página HTML**: Para exibir o nome e os ingredientes enviados, você precisará capturar esses dados na rota `/sugestao` e incluí-los na resposta HTML.
+5. **Rota `/sugestao` - deve exibir os ingredientes enviados via query string na página HTML:**
+   - O mesmo se aplica aqui. Para exibir os ingredientes, você precisaria garantir que eles sejam capturados da query string e adicionados à resposta HTML.
 
-6. **Âncoras para a rota raiz (`/`)**: Você deve adicionar um link que leve de volta à raiz na sua resposta HTML da rota `/sugestao`. Isso melhora a navegação do usuário.
+6. **Rota `/contato (GET)` - deve conter uma âncora para a rota raiz `/`:**
+   - Na sua rota de contato, você pode adicionar um link para retornar à página inicial. Isso poderia ser um simples `<a href="/">Voltar à Página Inicial</a>`.
 
-7. **Rota `/contato`**: Vi que você já criou a rota de contato, mas notamos que falta um campo `input` ou `textarea` para o "assunto". Vamos adicionar isso! Além disso, inclua uma âncora para a rota raiz.
+7. **Rota `/contato (POST)` - deve conter uma âncora para a rota raiz `/`:**
+   - O mesmo se aplica aqui. Após o envio do formulário, você pode incluir um link que leve à rota raiz, assim os usuários podem voltar facilmente.
 
-8. **Resposta da rota `/contato`**: Você precisa garantir que a resposta do POST em `/contato` exiba o "assunto" enviado. Isso pode ser feito da mesma forma que você fez para nome, email e mensagem.
+8. **Rota `/api/lanches` - deve retornar um array de lanches:**
+   - Você implementou a rota `/api/lanches`, mas precisamos verificar se o arquivo `lanches.json` realmente contém um array e se está estruturado corretamente.
 
-9. **Rota `/api/lanches`**: Para garantir que esta rota funcione corretamente, você precisa verificar se o arquivo `lanches.json` contém pelo menos três lanches com os atributos corretos (id, nome, ingredientes).
+9. **Rota `/api/lanches` - deve retornar um array com pelo menos 3 lanches:**
+   - Se o seu arquivo JSON não tem pelo menos 3 lanches, isso vai gerar um problema. Verifique o conteúdo do seu `lanches.json`.
 
-### Problemas que Geraram Descontos
-Vamos agora dar uma olhada nos problemas que levaram à sua nota:
+10. **Rota `/api/lanches` - cada objeto de lanche do array deve ter os seguintes atributos: id, nome, ingredientes:**
+    - Aqui, você precisa garantir que cada lanche no JSON tenha esses atributos. Se algum estiver faltando, a API não vai funcionar como esperado.
 
-1. **Endpoint `/sugestao` não deve aceitar método POST**: É importante que a rota aceita o método POST, então precisamos garantir que ela esteja configurada corretamente.
+11. **Rota `/api/lanches` - cada atributo deve possuir o tipo de dado correto e não ser vazio, 0 ou null:**
+    - Novamente, isso está ligado ao conteúdo do seu arquivo JSON. Certifique-se de que cada atributo dos lanches esteja devidamente preenchido.
 
-2. **Name attributes no formulário da página `index.html`**: Certifique-se de que todos os inputs estão com os `name` attributes corretos. Isso é crucial para que os dados sejam enviados corretamente.
+## Problemas que Geraram Descontos ⚠️
+Vamos agora abordar os pontos críticos que causaram descontos na sua nota. 
 
-3. **Dependências além do Express**: O projeto contém outras dependências além do express, o que pode não ser necessário dependendo do que você está tentando implementar. Vamos focar em manter o projeto leve!
+1. **Endpoint `/sugestao` não deve aceitar método POST:**
+   - Parece que você se esqueceu de definir que a rota `/sugestao` não deve aceitar POST. Se você não pretende que essa rota funcione para envios de dados, remova o método POST ou ajuste a implementação conforme necessário.
 
-4. **`.gitignore` não contém pasta `node_modules`**: Para evitar que a pasta `node_modules` seja enviada para o repositório, você deve incluir isso no seu `.gitignore`. Isso ajuda a manter seu repositório limpo e organizado.
+2. **Name attributes: formulário da página index.html não possui campos de input com name attributes corretos:**
+   - Como discutido anteriormente, ao criar um formulário na rota `/`, você precisa garantir que os `name` dos inputs sejam os corretos para que os dados sejam aceitos.
 
-### Conclusão
-Você está fazendo um ótimo trabalho, e cada feedback é uma oportunidade de crescimento! Estou aqui para ajudá-lo(a) a superar esses desafios e aprimorar suas habilidades em Node.js e Express. Vamos juntos realizar essas mudanças e fazer seu projeto brilhar! 💫
+3. **Static files: projeto contém outras dependências além do express:**
+   - Veja se você realmente precisa de todas as dependências que estão no seu projeto. O ideal é que você mantenha apenas o que for necessário.
 
-Se precisar de mais ajuda ou quiser discutir qualquer parte do código, estou aqui para você! 👩‍💻✨
+4. **Static files: .gitignore não contém pasta node_modules:**
+   - Para evitar que a pasta `node_modules` seja versionada no seu repositório, adicione-a ao seu arquivo `.gitignore`. Isso é uma boa prática em projetos Node.js!
+
+## Considerações Finais 🌈
+Você está a caminho de se tornar um(a) desenvolvedor(a) incrível! Lembre-se de que cada erro é uma oportunidade de aprendizado. 💪 Ao corrigir esses pontos, você não só melhorará seu projeto, mas também solidificará suas habilidades em Node.js e Express.js.
+
+Estou aqui para ajudar em qualquer dúvida que você tenha. Vamos juntos fazer esse código brilhar! ✨
