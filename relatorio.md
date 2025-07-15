@@ -1,28 +1,68 @@
 <sup>Esse é um feedback gerado por IA, ele pode conter erros.</sup>
 
-Você tem 3 créditos restantes para usar o sistema de feedback AI.
+Você tem 2 créditos restantes para usar o sistema de feedback AI.
 
 # Feedback para fillmello:
 
-Nota final: **50.6/100**
+Nota final: **41.5/100**
 
-Olá, fillmello! 😊 Primeiro de tudo, quero parabenizá-lo(a) pelo esforço e pelo trabalho que você fez até aqui! Você está se dedicando e isso é um grande passo para se tornar um desenvolvedor(a) incrível! 🎉
+# Feedback do Código - Desafio Express.js 🚀
 
-### 🎊 Conquistas Bônus
-Fiquei muito feliz em ver que você utilizou corretamente as tags `<label>` e o atributo `id` nos inputs "nome" e "ingredientes" na rota `/sugestao`. Isso mostra que você está pensando na acessibilidade do seu código, o que é super importante! Continue assim! 🌟
+Olá, fillmello! 😊 Antes de tudo, quero parabenizá-lo pelo esforço que você colocou neste desafio! A sua persistência é o primeiro passo para se tornar um grande desenvolvedor. Vamos juntos analisar seu código e entender onde podemos melhorar?
 
-### 🔍 Análise de Causa Raiz
-Agora, vamos mergulhar nos pontos que precisam de atenção. Ao revisar seu código, encontrei algumas áreas que podem ser ajustadas para atender aos requisitos. Vamos lá!
+## 🎉 Conquistas Bônus
 
-1. **Rota `/sugestao`**: Percebi que você implementou duas rotas para `/sugestao` (uma para o formulário e outra para a resposta). Isso pode estar causando confusão. O correto seria ter uma rota para exibir o formulário e outra para processar a sugestão. Portanto, a lógica de exibir o nome e os ingredientes não está funcionando porque você não está utilizando o mesmo caminho. Vamos corrigir isso, garantindo que a rota de resposta utilize a query string corretamente!
+Primeiro, vamos celebrar algumas vitórias que você teve nesse projeto:
 
-2. **Rota `/contato` (GET)**: Aqui, você mencionou que deveria haver um campo de input ou textarea do tipo texto com o atributo `name` como "assunto". Para resolver isso, você precisa adicionar um `<input>` ou `<textarea>` no seu formulário na rota `/contato`. Isso é essencial para que os dados sejam coletados corretamente.
+1. **Template 404 personalizado:** Você criou uma página 404 que exibe uma mensagem amigável, incluindo uma âncora para retornar à página inicial. Isso é ótimo para a experiência do usuário! 👏
+   
+2. **Tags `label` e `id` nos inputs:** Ao utilizar corretamente as tags `label` e o atributo `id` nos inputs 'nome' e 'ingredientes' na rota `/sugestao`, você melhorou a acessibilidade da sua aplicação. Isso é um excelente ponto! 🎊
 
-3. **Rota `/api/lanches`**: Aparentemente, a rota está retornando os lanches, mas precisamos garantir que o arquivo `lanches.json` contém pelo menos 3 lanches e que cada objeto de lanche possui os atributos `id`, `nome` e `ingredientes`. Vamos verificar o conteúdo do seu JSON para garantir que está tudo certo!
+## 🧐 Análise de Requisitos
 
-4. **Static Files**: Outro ponto importante é que você tem outras dependências além do Express.js e não incluiu a pasta `node_modules` no seu `.gitignore`. Isso pode causar problemas ao compartilhar seu projeto. O seu `.gitignore` deve conter `node_modules/` para evitar que esses arquivos sejam enviados ao repositório.
+Agora, vamos analisar os requisitos que precisam de atenção. 
 
-### 📝 Considerações Finais
-Você está no caminho certo, e cada erro é uma oportunidade de aprendizado! Continue praticando e aperfeiçoando suas habilidades. Se precisar de ajuda para ajustar esses pontos, estou aqui para te apoiar! Vamos juntos transformar esses desafios em conquistas. 🚀
+### 1. Rota `/sugestao`
 
-Mantenha a boa energia e continue construindo! 💪✨
+**Problemas Identificados:**
+- Você tem duas rotas definidas para `/sugestao`. A primeira exibe o formulário e a segunda tenta processar a sugestão, mas elas estão conflitando. Na verdade, a rota para processar sugestões precisa ser um `POST`, enquanto a rota para exibir o formulário deve ser um `GET`. 
+
+**Solução:**
+- Mantenha apenas a rota de exibição do formulário no `GET` e crie uma nova rota `POST` para processar a sugestão. Assim, você evitará conflitos e garantirá que a lógica do seu aplicativo funcione corretamente!
+
+### 2. Rota `/contato`
+
+**Problemas Identificados:**
+- **Campo `assunto`:** Você não incluiu um `<input>` ou `<textarea>` no formulário da rota `GET /contato` para o campo `assunto`. Isso é essencial para coletar todas as informações que você precisa do usuário.
+
+**Solução:**
+- Adicione um campo de entrada para o `assunto` no formulário da rota `/contato`. Assim, o formulário ficará completo e atenderá ao requisito!
+
+- **Redirecionamento e Status Code:** No `POST` da rota `/contato`, você está redirecionando para `/contato/sucesso`, mas é importante que o status code da resposta final seja `200` e que a resposta seja uma página HTML. 
+
+**Solução:**
+- Ao invés de redirecionar, você pode renderizar a página de sucesso diretamente na rota `POST` com o status `200`.
+
+- **Exibição de Dados:** A página de resposta não está exibindo o `email`, `assunto` e `mensagem`. Você precisa garantir que essas informações sejam passadas e exibidas na página de sucesso!
+
+### 3. API `/api/lanches`
+
+**Problemas Identificados:**
+- Você precisa garantir que todos os atributos no JSON retornado pela API tenham o tipo de dado correto e não sejam vazios, `0` ou `null`. 
+
+**Solução:**
+- Faça uma verificação nos dados que você está retornando. Isso garantirá que você esteja enviando informações consistentes e úteis.
+
+## ⚠️ Problemas que Geraram Descontos
+
+Agora, vamos discutir alguns problemas que causaram descontos na sua nota:
+
+1. **Dependências do Projeto:** Você incluiu outras dependências além do `express`. Para projetos simples, é importante manter as dependências ao mínimo. Pense nelas como ferramentas que você usa em um projeto - quanto mais você tem, mais difícil fica gerenciar!
+
+2. **.gitignore:** O arquivo `.gitignore` não contém a pasta `node_modules`. Isso é fundamental para evitar que o código de dependências externas seja incluído no seu repositório. Certifique-se de adicionar `node_modules` ao seu `.gitignore` para manter seu repositório limpo!
+
+## 💡 Conclusão
+
+Parece que você está no caminho certo, e com essas melhorias, seu projeto pode brilhar ainda mais! Lembre-se, cada erro é uma oportunidade de aprendizado. Continue praticando e experimentando, e logo você verá grandes progressos. Estou aqui para ajudar no que for preciso! Vamos juntos nessa jornada de aprendizado! 🚀💪
+
+Se tiver dúvidas ou quiser discutir algum ponto, fique à vontade para perguntar!
