@@ -6,11 +6,9 @@ const port = 3000;
 
 const lanches = require('./public/data/lanches.json');
 
-app.use(morgan('dev')); // já inclui o next()
-app.use(express.urlencoded({ extended: true }));
-
-// ESTÁTICOS
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(morgan('dev')); // Middleware para logs
+app.use(express.urlencoded({ extended: true })); // Middleware para interpretar o corpo das requisições
+app.use(express.static(path.join(__dirname, 'public'))); // Servir arquivos estáticos
 
 const categorias = ["Gourmet", "Vegetariano", "Vegano", "Apimentado"];
 
@@ -19,45 +17,12 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'index.html'));
 });
 
-// CONTATO
-app.get('/contato', (req, res)   => {
-    const htmlContato = `
-        <!DOCTYPE html>
-        <html lang="pt-BR">
-        <head>
-            <meta charset="UTF-8">
-            <title>Contato</title>
-            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-        </head>
-        <body>
-            <div class="container mt-5">
-                <h1 class="mb-4">Entre em contato conosco!</h1>
-                <form action="/contato" method="POST">
-                    <div class="mb-3">
-                        <label for="nome" class="form-label">Seu Nome:</label>
-                        <input type="text" class="form-control" id="nome" name="nome" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="email" class="form-label">Seu Email:</label>
-                        <input type="email" class="form-control" id="email" name="email" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="assunto" class="form-label">Assunto:</label>
-                        <input type="text" class="form-control" id="assunto" name="assunto" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="mensagem" class="form-label">Mensagem:</label>
-                        <textarea class="form-control" id="mensagem" name="mensagem" rows="3" required></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Enviar</button>
-                </form>
-            </div>
-        </body>
-        </html>
-    `;
-    res.send(htmlContato);
+// CONTATO (GET)
+app.get('/contato', (req, res) => {
+    res.sendFile(path.join(__dirname, 'views', 'contatos.html'));
 });
 
+// CONTATO (POST)
 app.post('/contato', (req, res) => {
     const { nome, email, assunto, mensagem } = req.body;
 
@@ -70,7 +35,7 @@ app.post('/contato', (req, res) => {
         <html lang="pt-BR">
         <head>
             <meta charset="UTF-8">
-            <title>Obrigado pelo Contato!</title>
+            <title>Contato Recebido</title>
             <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
         </head>
         <body>
@@ -82,7 +47,7 @@ app.post('/contato', (req, res) => {
                         <p><strong>Email:</strong> ${email}</p>
                         <p><strong>Assunto:</strong> ${assunto}</p>
                         <p><strong>Mensagem:</strong> ${mensagem}</p>
-                        <a href="/contato" class="btn btn-primary">Enviar outra mensagem</a>
+                        <a href="/" class="btn btn-primary">Voltar à Página Inicial</a>
                     </div>
                 </div>
             </div>
@@ -92,8 +57,6 @@ app.post('/contato', (req, res) => {
 
     res.send(respostaHTML);
 });
-
-// SUGESTAO
 
 // SUGESTAO (GET)
 app.get('/sugestao', (req, res) => {
@@ -108,16 +71,10 @@ app.get('/sugestao', (req, res) => {
         <body>
             <div class="container mt-5">
                 <h1 class="mb-4">Sugerir Novo Lanche</h1>
-                <form action="/sugestao" method="POST">
+                <form action="/sugestao" method="GET">
                     <div class="mb-3">
                         <label for="nome" class="form-label">Nome do Lanche:</label>
                         <input type="text" class="form-control" id="nome" name="nome" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="categoria" class="form-label">Categoria:</label>
-                        <select class="form-select" id="categoria" name="categoria" required>
-                            ${categorias.map(cat => `<option value="${cat}">${cat}</option>`).join('')}
-                        </select>
                     </div>
                     <div class="mb-3">
                         <label for="ingredientes" class="form-label">Ingredientes:</label>
@@ -133,10 +90,11 @@ app.get('/sugestao', (req, res) => {
     res.send(htmlSugestao);
 });
 
-app.post('/sugestao', (req, res) => {
-    const { nome, categoria, ingredientes } = req.body;
+// SUGESTAO (GET com Query String)
+app.get('/sugestao', (req, res) => {
+    const { nome, ingredientes } = req.query;
 
-    if (!nome || !categoria || !ingredientes) {
+    if (!nome || !ingredientes) {
         return res.status(400).send('Todos os campos são obrigatórios!');
     }
 
@@ -145,18 +103,17 @@ app.post('/sugestao', (req, res) => {
         <html lang="pt-BR">
         <head>
             <meta charset="UTF-8">
-            <title>Obrigado!</title>
+            <title>Obrigado pela Sugestão!</title>
             <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
         </head>
         <body>
-            <div class="container">
+            <div class="container mt-5">
                 <div class="card">
                     <div class="card-body">
                         <h1 class="card-title text-success">Obrigado pela sugestão!</h1>
-                        <p><strong>Nome do lanche:</strong> ${nome}</p>
-                        <p><strong>Categoria:</strong> ${categoria}</p>
+                        <p><strong>Nome do Lanche:</strong> ${nome}</p>
                         <p><strong>Ingredientes:</strong> ${ingredientes}</p>
-                        <a href="/" class="btn btn-primary">Voltar à página inicial</a>
+                        <a href="/" class="btn btn-primary">Voltar à Página Inicial</a>
                     </div>
                 </div>
             </div>
@@ -169,15 +126,15 @@ app.post('/sugestao', (req, res) => {
 
 // API LANCHES
 app.get('/api/lanches', (req, res) => {
-    res.json(lanches);
+    res.json(lanches.hamburgueres);
 });
 
-// 404
+// 404 - Página Não Encontrada
 app.use((req, res) => {
     res.status(404).sendFile(path.join(__dirname, 'public', '404.html'));
 });
 
-// START
+// INICIAR SERVIDOR
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
 });
