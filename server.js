@@ -10,22 +10,58 @@ app.use(morgan('dev')); // já inclui o next()
 app.use(express.urlencoded({ extended: true }));
 
 // ESTÁTICOS
-app.use(express.static(path.join(__dirname, 'views')));
 app.use(express.static(path.join(__dirname, 'public')));
 
 const categorias = ["Gourmet", "Vegetariano", "Vegano", "Apimentado"];
 
-//CONTATO
-app.get('/contato', (req, res) => {
-    res.sendFile(path.join(__dirname, 'views', 'contatos.html'));
+// ROTA RAIZ
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'views', 'index.html'));
 });
 
-//CONTATO
+// CONTATO
+app.get('/contato', (req, res)   => {
+    const htmlContato = `
+        <!DOCTYPE html>
+        <html lang="pt-BR">
+        <head>
+            <meta charset="UTF-8">
+            <title>Contato</title>
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+        </head>
+        <body>
+            <div class="container mt-5">
+                <h1 class="mb-4">Entre em contato conosco!</h1>
+                <form action="/contato" method="POST">
+                    <div class="mb-3">
+                        <label for="nome" class="form-label">Seu Nome:</label>
+                        <input type="text" class="form-control" id="nome" name="nome" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Seu Email:</label>
+                        <input type="email" class="form-control" id="email" name="email" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="assunto" class="form-label">Assunto:</label>
+                        <input type="text" class="form-control" id="assunto" name="assunto" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="mensagem" class="form-label">Mensagem:</label>
+                        <textarea class="form-control" id="mensagem" name="mensagem" rows="3" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Enviar</button>
+                </form>
+            </div>
+        </body>
+        </html>
+    `;
+    res.send(htmlContato);
+});
+
 app.post('/contato', (req, res) => {
-    const { nome, email, mensagem } = req.body;
+    const { nome, email, assunto, mensagem } = req.body;
 
-
-    if (!nome || !email || !mensagem) {
+    if (!nome || !email || !assunto || !mensagem) {
         return res.status(400).send('Todos os campos são obrigatórios!');
     }
 
@@ -36,10 +72,6 @@ app.post('/contato', (req, res) => {
             <meta charset="UTF-8">
             <title>Obrigado pelo Contato!</title>
             <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-            <style>
-                body { padding: 20px; }
-                .card { margin-top: 20px; }
-            </style>
         </head>
         <body>
             <div class="container mt-5">
@@ -48,6 +80,7 @@ app.post('/contato', (req, res) => {
                         <h1 class="card-title text-success">Obrigado pelo contato!</h1>
                         <p><strong>Nome:</strong> ${nome}</p>
                         <p><strong>Email:</strong> ${email}</p>
+                        <p><strong>Assunto:</strong> ${assunto}</p>
                         <p><strong>Mensagem:</strong> ${mensagem}</p>
                         <a href="/contato" class="btn btn-primary">Enviar outra mensagem</a>
                     </div>
@@ -61,21 +94,23 @@ app.post('/contato', (req, res) => {
 });
 
 // SUGESTAO
-app.get('/form', (req, res) => {
-    const htmlForm = `
+
+// SUGESTAO (GET)
+app.get('/sugestao', (req, res) => {
+    const htmlSugestao = `
         <!DOCTYPE html>
         <html lang="pt-BR">
         <head>
             <meta charset="UTF-8">
-            <title>Sugerir Lanche - DevBurger</title>
+            <title>Sugerir Novo Lanche</title>
             <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
         </head>
         <body>
             <div class="container mt-5">
-                <h1 class="mb-4">Sugira um novo lanche!</h1>
+                <h1 class="mb-4">Sugerir Novo Lanche</h1>
                 <form action="/sugestao" method="POST">
                     <div class="mb-3">
-                        <label for="nome" class="form-label">Nome do lanche:</label>
+                        <label for="nome" class="form-label">Nome do Lanche:</label>
                         <input type="text" class="form-control" id="nome" name="nome" required>
                     </div>
                     <div class="mb-3">
@@ -88,20 +123,18 @@ app.get('/form', (req, res) => {
                         <label for="ingredientes" class="form-label">Ingredientes:</label>
                         <textarea class="form-control" id="ingredientes" name="ingredientes" rows="3" required></textarea>
                     </div>
-                    <button type="submit" class="btn btn-primary">Enviar</button>
+                    <button type="submit" class="btn btn-primary">Enviar Sugestão</button>
                 </form>
+                <a href="/" class="btn btn-secondary mt-3">Voltar à Página Inicial</a>
             </div>
         </body>
         </html>
     `;
-
-    res.send(htmlForm);
+    res.send(htmlSugestao);
 });
 
-// SUGESTAO
 app.post('/sugestao', (req, res) => {
     const { nome, categoria, ingredientes } = req.body;
-
 
     if (!nome || !categoria || !ingredientes) {
         return res.status(400).send('Todos os campos são obrigatórios!');
@@ -114,22 +147,16 @@ app.post('/sugestao', (req, res) => {
             <meta charset="UTF-8">
             <title>Obrigado!</title>
             <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-            <style>
-                body { padding: 20px; }
-                .card { margin-top: 20px; }
-            </style>
         </head>
         <body>
             <div class="container">
                 <div class="card">
                     <div class="card-body">
                         <h1 class="card-title text-success">Obrigado pela sugestão!</h1>
-                        <div class="card-text">
-                            <p><strong>Nome do lanche:</strong> ${nome}</p>
-                            <p><strong>Categoria:</strong> ${categoria}</p>
-                            <p><strong>Ingredientes:</strong> ${ingredientes}</p>
-                        </div>
-                        <a href="/form" class="btn btn-primary">Sugerir outro lanche</a>
+                        <p><strong>Nome do lanche:</strong> ${nome}</p>
+                        <p><strong>Categoria:</strong> ${categoria}</p>
+                        <p><strong>Ingredientes:</strong> ${ingredientes}</p>
+                        <a href="/" class="btn btn-primary">Voltar à página inicial</a>
                     </div>
                 </div>
             </div>
