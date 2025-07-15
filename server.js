@@ -10,8 +10,6 @@ app.use(morgan('dev')); // Middleware para logs
 app.use(express.urlencoded({ extended: true })); // Middleware para interpretar o corpo das requisições
 app.use(express.static(path.join(__dirname, 'public'))); // Servir arquivos estáticos
 
-const categorias = ["Gourmet", "Vegetariano", "Vegano", "Apimentado"];
-
 // ROTA RAIZ
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'index.html'));
@@ -58,7 +56,7 @@ app.post('/contato', (req, res) => {
     res.send(respostaHTML);
 });
 
-// SUGESTAO (GET)
+// SUGESTAO (GET - Formulário)
 app.get('/sugestao', (req, res) => {
     const htmlSugestao = `
         <!DOCTYPE html>
