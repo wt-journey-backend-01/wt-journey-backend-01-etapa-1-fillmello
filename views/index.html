@@ -72,9 +72,22 @@
         </div>
     </div>
 
-    <!-- Botão para Sugerir Novo Lanche -->
-    <div class="text-center my-4">
-        <a href="/sugestao" class="btn btn-primary">Sugerir Novo Lanche</a>
+    <!-- Formulário para Sugerir Novo Lanche -->
+    <div class="container my-5">
+        <h2 class="text-center mb-4">Sugerir Novo Lanche</h2>
+        <form action="/sugestao" method="GET">
+            <div class="mb-3">
+                <label for="nome" class="form-label">Nome do Lanche:</label>
+                <input type="text" class="form-control" id="nome" name="nome" required>
+            </div>
+            <div class="mb-3">
+                <label for="ingredientes" class="form-label">Ingredientes:</label>
+                <textarea class="form-control" id="ingredientes" name="ingredientes" rows="3" required></textarea>
+            </div>
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary">Enviar Sugestão</button>
+            </div>
+        </form>
     </div>
 
     <!-- Footer -->
